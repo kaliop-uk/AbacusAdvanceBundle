@@ -10,7 +10,7 @@ services:
         class: '%abacus.advance.client.class%'
         arguments:
           - '%advance_api_base_url%'
-          - '%$advance_api_credentials_hash%'
+          - '%advance_api_credentials_hash%'
           - '%advance_api_credentials_token%'
           - '%advance_api_version%'
           - '%advance_api_http_options%'
