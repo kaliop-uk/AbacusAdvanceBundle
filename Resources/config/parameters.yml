@@ -1,0 +1,10 @@
+parameters:
+
+# Define here or in your bundle/app Abacus Advance parameters
+# All these parameters *are required*
+
+#    advance_api_base_url: 'https://adgate.abasoft.co.uk'
+#    advance_api_credentials_hash: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#    advance_api_credentials_token: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+#    advance_api_version: 1
+#    advance_api_http_options: options passed directly to Guzzle

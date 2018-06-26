@@ -1,0 +1,31 @@
+parameters:
+    # override in your bundle if you want to use another service
+    advance_api_client: abacus.advance.client
+
+    abacus.advance.client.class: Abacus\AdvanceBundle\Core\AdvanceClient
+
+services:
+
+    abacus.advance.client:
+        class: '%abacus.advance.client.class%'
+        arguments:
+          - '%advance_api_base_url%'
+          - '%$advance_api_credentials_hash%'
+          - '%advance_api_credentials_token%'
+          - '%advance_api_version%'
+          - '%advance_api_http_options%'
+
+    abacus.advance.api:
+        class: Abacus\AdvanceBundle\Core\AdvanceApiGateway
+        arguments:
+          - '@service_container'
+
+    abacus.advance.service.gate_keeper:
+        class: Abacus\AdvanceBundle\Core\Service\GateKeeper
+        arguments:
+          - '@=service(parameter("advance_api_client"))'
+
+    abacus.advance.service.user:
+        class: Abacus\AdvanceBundle\Core\Service\User
+        arguments:
+          - '@=service(parameter("advance_api_client"))'

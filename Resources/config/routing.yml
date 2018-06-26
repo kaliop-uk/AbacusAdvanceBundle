@@ -1,0 +1,7 @@
+abacus_advance_api_categories:
+    path: /{site}/ad/categories
+    defaults: { _controller: 'AbacusAdvanceBundle:Api:categories' }
+
+abacus_advance_api_story_category_mapping:
+    path: /{site}/ad/story-category-mapping
+    defaults: { _controller: 'AbacusAdvanceBundle:Api:storyCategoryMapping' }
