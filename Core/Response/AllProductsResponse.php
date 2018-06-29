@@ -46,7 +46,7 @@ class AllProductsResponse extends AdvanceResponse
             $this->productList = [];
             $rawProducts = $this->getRawProductList();
             foreach ($rawProducts as $rawProduct) {
-                $this->productList[] = (new Product($rawProduct));
+                $this->productList[] = new Product($rawProduct);
             }
         }
         return $this->productList;

@@ -46,7 +46,7 @@ class AvailableProductsResponse extends AdvanceResponse
             $this->userProductModelList = [];
             $rawProducts = $this->getRawProductList();
             foreach ($rawProducts as $rawProduct) {
-                $this->userProductModelList[] = (new AvailableProduct($rawProduct));
+                $this->userProductModelList[] = new AvailableProduct($rawProduct);
             }
         }
         return $this->userProductModelList;

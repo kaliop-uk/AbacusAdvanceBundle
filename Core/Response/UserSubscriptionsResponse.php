@@ -45,7 +45,7 @@ class UserSubscriptionsResponse extends AdvanceResponse
             $this->subscriptionModelList = [];
             $rawSubscriptions = $this->getRawSubscriptionList();
             foreach ($rawSubscriptions as $rawSub) {
-                $this->subscriptionModelList[] = (new Subscription($rawSub));
+                $this->subscriptionModelList[] = new Subscription($rawSub);
             }
         }
         return $this->subscriptionModelList;

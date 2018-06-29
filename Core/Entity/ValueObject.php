@@ -15,6 +15,12 @@ use Abacus\AdvanceBundle\Core\Exception\PropertyReadOnlyException;
  */
 abstract class ValueObject
 {
+    const REJECT_UNKNOWN_PROPERTIES = 0;
+    const DROP_UNKNOWN_PROPERTIES = 1;
+    const ACCEPT_UNKNOWN_PROPERTIES = 2;
+
+    private $forcePropertyCreation = false;
+
     /**
      * Construct object optionally with a set of properties.
      *
@@ -22,12 +28,29 @@ abstract class ValueObject
      * after object has been created.
      *
      * @param array $properties
+     * @param int $unknownPropertiesHandling decides what to do with unexpected elements in the $properties array
+     * @throws \Abacus\AdvanceBundle\Core\Exception\PropertyNotFoundException
      */
-    public function __construct(array $properties = array())
+    public function __construct(array $properties = array(), $unknownPropertiesHandling = self::ACCEPT_UNKNOWN_PROPERTIES)
     {
         foreach ($properties as $property => $value) {
             $property = lcfirst($property);
-            $this->$property = $value;
+            try {
+                $this->$property = $value;
+            } catch (PropertyNotFoundException $e) {
+                switch ($unknownPropertiesHandling) {
+                    case self::REJECT_UNKNOWN_PROPERTIES:
+                        throw $e;
+                    case self::ACCEPT_UNKNOWN_PROPERTIES:
+                        $this->forcePropertyCreation = true;
+                        $this->$property = $value;
+                        $this->forcePropertyCreation = false;
+                        break;
+                    case self::DROP_UNKNOWN_PROPERTIES:
+                        break;
+
+                }
+            }
         }
     }
 
@@ -36,14 +59,17 @@ abstract class ValueObject
      *
      * @ignore This method is for internal use
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException When property does not exist
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException When property is readonly (protected)
+     * @throws \Abacus\AdvanceBundle\Core\Exception\PropertyNotFoundException When property does not exist
+     * @throws \Abacus\AdvanceBundle\Core\Exception\PropertyReadOnlyException When property is readonly (protected)
      *
      * @param string $property Name of the property
      * @param string $value
      */
     public function __set($property, $value)
     {
+        if ( $this->forcePropertyCreation) {
+            return;
+        }
         if (property_exists($this, $property)) {
             throw new PropertyReadOnlyException($property, get_class($this));
         }
@@ -57,7 +83,7 @@ abstract class ValueObject
      *
      * @ignore This method is for internal use
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException exception on all reads to undefined properties so typos are not silently accepted.
+     * @throws \Abacus\AdvanceBundle\Core\Exception\PropertyNotFoundException exception on all reads to undefined properties so typos are not silently accepted.
      *
      * @param string $property Name of the property
      *
@@ -92,8 +118,8 @@ abstract class ValueObject
      *
      * @ignore This method is for internal use
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException exception on all writes to undefined properties so typos are not silently accepted and
-     * @throws \eZ\Publish\API\Repository\Exceptions\PropertyReadOnlyException exception on readonly (protected) properties.
+     * @throws \Abacus\AdvanceBundle\Core\Exception\PropertyNotFoundException exception on all writes to undefined properties so typos are not silently accepted and
+     * @throws \Abacus\AdvanceBundle\Core\Exception\PropertyReadOnlyException exception on readonly (protected) properties.
      *
      * @uses __set()
      * @param string $property Name of the property

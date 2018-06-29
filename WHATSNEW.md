@@ -1,3 +1,10 @@
+Version 1.1
+===========
+
+Accept by default unknown properties for the valueObjects that get built from ADvance responses. This makes the 
+bundle more elastic with forward-compatibility. 
+
+
 Version 1.0.2
 =============
 
