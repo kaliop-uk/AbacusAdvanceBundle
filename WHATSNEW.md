@@ -1,3 +1,8 @@
+Version 1.2
+===========
+
+Be less strict in validating the parameters for the `logWebActivity` call
+
 Version 1.1
 ===========
 
