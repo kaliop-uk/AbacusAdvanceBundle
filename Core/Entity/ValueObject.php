@@ -43,6 +43,10 @@ abstract class ValueObject
                         throw $e;
                     case self::ACCEPT_UNKNOWN_PROPERTIES:
                         $this->forcePropertyCreation = true;
+                        // go out of our way to be tolerant in case we get funky characters that do not translate well
+                        // into easily-accessible property names.
+                        // Btw: wanna have some fun ? see https://stackoverflow.com/questions/17973357/what-are-the-valid-characters-in-php-variable-method-class-etc-names
+                        $property = preg_replace('/[^a-zA-Z0-9_\x7f-\xff]/', '_', $property);
                         $this->$property = $value;
                         $this->forcePropertyCreation = false;
                         break;

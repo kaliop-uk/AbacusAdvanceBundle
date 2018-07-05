@@ -237,10 +237,11 @@ class User extends AdvanceService
                 // Get results if there is this ip address assigned
                 'ipAddress',
             ])
-            ->setAllowedValues('metaType', ['Story', 'Category', 'Attachment'])
+            // these enums are in the manual for api rev. 0.9.14, but it seems that Abacus adds frequently new allowed values
+            //->setAllowedValues('metaType', ['Story', 'Category', 'Attachment'])
             //->setAllowedValues('actionName', ['Download', 'Login'])
             ->setAllowedTypes('numberOfMetaCategories', ['integer'])
-            ->setAllowedValues('itemType', ['Newsletter', 'Website', 'Recruitment', 'Events', 'Directory', 'AccessControl', 'Login', 'ADFrontend'])
+            //->setAllowedValues('itemType', ['Newsletter', 'Website', 'Recruitment', 'Events', 'Directory', 'AccessControl', 'Login', 'ADFrontend'])
             ->resolve($options);
 
         /** @var WebActivityResponse $response */
