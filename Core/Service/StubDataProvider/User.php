@@ -46,25 +46,10 @@ class User extends Base
             return $this->failedResponse();
         }
 
-        /// @todo
         return new UserSubscriptionsResponse($this->buildResponseArray(
-            $profile['Subscriptions']
-            /*[
-                'list' => [
-                    [
-                        'productCode' => 'LIP',
-                        'subscriptionStatus' => 'Live'
-                    ],
-                    [
-                        'productCode' => 'LIS',
-                        'subscriptionStatus' => 'Live'
-                    ],
-                    [
-                        'productCode' => 'LISN',
-                        'subscriptionStatus' => 'Live'
-                    ]
-                ]
-            ]*/
+            [
+                'list' => $profile['Subscriptions']
+            ]
         ));
     }
 
@@ -82,15 +67,15 @@ class User extends Base
         }
 
         return new AvailableProductsResponse($this->buildResponseArray(
-            $profile['AvailableProducts']
-            /*[
-                'list' => []
-            ]*/
+            [
+                'list' => $profile['AvailableProducts']
+            ]
         ));
     }
 
     public function doesPartyBelongToBI(
-        $userToken = null
+        $userToken = null,
+        $formId = null
     )
     {
         $profile = $this->getUserProfileFromToken($userToken);
@@ -99,16 +84,26 @@ class User extends Base
             return $this->failedResponse();
         }
 
+        $status = 'False';
+        foreach ($profile['BIRulesBelongedTo'] as $biRule) {
+            if (preg_match($biRule['FormIdRegexp'], $formId)) {
+                $status = $biRule['status'];
+                break;
+            }
+        }
+
         return new BelongToBIResponse($this->buildResponseArray(
-            $profile['BIRulesBelongedTo']
-            /*[
+            [
                 'BIResult' => [
-                    'Status' => null
+                    'Status' => $status
                 ]
-            ]*/
+            ]
         ));
     }
 
+    /**
+     * @todo add all the missing parameters
+     */
     public function logWebActivity(
         $userToken = null
     )

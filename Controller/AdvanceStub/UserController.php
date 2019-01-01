@@ -43,7 +43,8 @@ class UserController extends BaseController
     {
         $dataProvider = $this->beginAction($request, $site, $version);
         $data = $dataProvider->doesPartyBelongToBI(
-            $request->request->get('userToken')
+            $request->request->get('userToken'),
+            $request->request->get('formId'),
         );
         return $this->encodeResponse($data);
     }

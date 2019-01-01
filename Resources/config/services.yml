@@ -24,14 +24,45 @@ parameters:
                 Salutation: Mr.
                 Gender: M
                 DateOfBirthday: 02/09/1972
+                AccessRules: # for gatekeeper calls
+                    -
                 Subscriptions:
                     -
-                        productCode: 123
-                        subscriptionStatus: Live
-                AvailableProducts: []
-                BIRulesBelongedTo: []
-                AccessRules:
+                        SubscriptionID:
+                        StartDate:
+                        StartDateTime:
+                        EndDate:
+                        EndDateTime:
+                        ProductID:
+                        ProductCode: 123
+                        ProductName:
+                        ProductType:
+                        OrderCode:
+                        OrderDate:
+                        SubscriptionType:
+                        OrderStatus:
+                        SubscriptionStatus: Live
+                        OrderStatusDescription:
+                        SubscriptionPrice:
+                        DeliveryAddress:
+                        EmailAccount:
+                AvailableProducts:
                     -
+                        OrderDate:
+                        ProductId:
+                        QualificationType:
+                        Value:
+                        IsMetered:
+                        MeteredOrder:
+                        AccessFrequency:
+                        FormCoreMatrixID:
+                        DataFilterStatus:
+                        DataFilterId:
+                        URLRule:
+                BIRulesBelongedTo:
+                    -
+                        FormIdRegexp: '/^.+$/'
+                        Status: 'True'
 
 services:
 

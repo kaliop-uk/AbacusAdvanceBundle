@@ -17,13 +17,13 @@ class Login extends Base
         return $this->createResponse($profile);
     }
 
+    /// @todo implement support for $frontendCookie
     public function autoLogin(
         $frontendCookie = null,
         $concurrencyCookie = null,
         $ipAddress = null
     )
     {
-        /// @todo
         return new LoginResponse($this->buildResponseArray(
             [
                 'LoginDetails' => [
@@ -50,11 +50,11 @@ class Login extends Base
     }
 
     /**
-     * @param null|array $userProfile
+     * @param null|array $profile
      * @return LoginResponse
      * @throws \Abacus\AdvanceBundle\Core\Exception\AdvanceResponseException
      */
-    protected function createResponse($userProfile)
+    protected function createResponse($profile)
     {
         if (!$profile) {
             return $this->failedLoginResponse();
