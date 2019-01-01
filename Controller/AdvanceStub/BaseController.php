@@ -7,11 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Abacus\AdvanceBundle\Core\Response\AdvanceResponse;
 
-class BaseController extends Controller
+abstract class BaseController extends Controller
 {
     const RESPONSE_FORMAT_HEADER = 'ADAPI_RESPONSE_FORMAT';
 
-    protected $adapiResponseFormat = 'xml'; // xml is the default
+    protected $adapiResponseFormat = 'xml'; // xml is the default as per the spec
     protected $dataProviderServiceId;
 
     protected function beginAction($request, $site, $version)

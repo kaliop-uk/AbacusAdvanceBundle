@@ -9,8 +9,29 @@ parameters:
     abacus.advance.stub_data_provider.user.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\User
 
     abacus.advance.stub_data_provider.config:
-        -
-        -
+        settings:
+            FrontendCookieName: FrontendCookie
+            ConcurrencyCookieName: ConcurrencyCookie
+        users:
+            -
+                LoginRegexp: '/^valid_user@test\.com$/'
+                PasswordRegexp: '/^test$/'
+                Username: valid_user@test.com
+                PartyId: 1234
+                UserRegistrationID: 12345
+                Forname: Valid
+                Surname: User
+                Salutation: Mr.
+                Gender: M
+                DateOfBirthday: 02/09/1972
+                Subscriptions:
+                    -
+                        productCode: 123
+                        subscriptionStatus: Live
+                AvailableProducts: []
+                BIRulesBelongedTo: []
+                AccessRules:
+                    -
 
 services:
 
@@ -41,12 +62,12 @@ services:
     abacus.advance.stub_data_provider.login:
         class: '%abacus.advance.stub_data_provider.login.class%'
         arguments:
-            - '%abacus.advance.stub_data_provider.data%'
+            - '%abacus.advance.stub_data_provider.config%'
 
     abacus.advance.stub_data_provider.gatekeeper:
         class: '%abacus.advance.stub_data_provider.gatekeeper.class%'
         arguments:
-            - '%abacus.advance.stub_data_provider.data%'
+            - '%abacus.advance.stub_data_provider.config%'
 
 
     abacus.advance.stub_data_provider.user:

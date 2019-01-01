@@ -10,24 +10,46 @@ use Abacus\AdvanceBundle\Core\Response\WebActivityResponse;
 
 class User extends Base
 {
-    public function details()
+    public function details(
+        $userToken = null
+    )
     {
-        /// @todo
+        $profile = $this->getUserProfileFromToken($userToken);
+
+        if (!$profile) {
+            return $this->failedResponse();
+        }
+
         return new UserDetailsResponse($this->buildResponseArray(
             [
                 'Person' => [
-                    'Forname' => null,
-                    'Surname' => null
+                    'UserRegistrationID' => $profile['UserRegistrationID'],
+                    'Forname' => $profile['Forname'],
+                    'Surname' => $profile['Surname'],
+                    'Salutation' => $profile['Salutation'],
+                    'Gender' => $profile['Gender'],
+                    'DateOfBirthday' => $profile['DateOfBirthday'],
+                    'UserToken' => null /// @todo
                 ]
             ]
         ));
     }
 
-    public function getUserSubscriptions()
+    public function getUserSubscriptions(
+        $userToken = null,
+        $ipAddress = null
+    )
     {
+        $profile = $this->getUserProfileFromToken($userToken);
+
+        if (!$profile) {
+            return $this->failedResponse();
+        }
+
         /// @todo
         return new UserSubscriptionsResponse($this->buildResponseArray(
-            [
+            $profile['Subscriptions']
+            /*[
                 'list' => [
                     [
                         'productCode' => 'LIP',
@@ -42,34 +64,61 @@ class User extends Base
                         'subscriptionStatus' => 'Live'
                     ]
                 ]
-            ]
+            ]*/
         ));
     }
 
-    public function getListOfAvailableProducts()
+    public function getListOfAvailableProducts(
+        $userToken = null,
+        $partyId = null,
+        $brandId = null,
+        $ipAddress = null
+    )
     {
-        /// @todo
+        $profile = $this->getUserProfileFromToken($userToken);
+
+        if (!$profile) {
+            return $this->failedResponse();
+        }
+
         return new AvailableProductsResponse($this->buildResponseArray(
-            [
+            $profile['AvailableProducts']
+            /*[
                 'list' => []
-            ]
+            ]*/
         ));
     }
 
-    public function doesPartyBelongToBI()
+    public function doesPartyBelongToBI(
+        $userToken = null
+    )
     {
-        /// @todo
+        $profile = $this->getUserProfileFromToken($userToken);
+
+        if (!$profile) {
+            return $this->failedResponse();
+        }
+
         return new BelongToBIResponse($this->buildResponseArray(
-            [
+            $profile['BIRulesBelongedTo']
+            /*[
                 'BIResult' => [
                     'Status' => null
                 ]
-            ]
+            ]*/
         ));
     }
 
-    public function logWebActivity()
+    public function logWebActivity(
+        $userToken = null
+    )
     {
+        $profile = $this->getUserProfileFromToken($userToken);
+
+        if (!$profile) {
+            return $this->failedResponse();
+        }
+
         return new WebActivityResponse($this->buildResponseArray(
            []
         ));

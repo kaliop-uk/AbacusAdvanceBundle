@@ -13,29 +13,16 @@ class Login extends Base
         $ipAddress = null
     )
     {
-        /// @todo
-        return new LoginResponse($this->buildResponseArray(
-            [
-                'LoginDetails' => [
-                    'FrontendCookieName' => 'FrontEndCookie',
-                    'FrontendCookieValue' => 'test',
-                    'ConcurrencyCookieName' => 'ConcurrencyCookie',
-                    'ConcurrencyCookieValue' => 'test',
-                    'Activated' => 'true',
-                    'UserToken' => 'abcdefghij',
-                    'Username' => 'lum-all3-live-sub@test.com',
-                    'PartyID' => 'lum-all3-live-sub@test.com',
-                    'UserRegistrationID' => 123,
-                ],
-            ]
-        ));
+        $profile = $this->getUserProfile($username, $password);
+        return $this->createResponse($profile);
     }
 
     public function autoLogin(
         $frontendCookie = null,
         $concurrencyCookie = null,
         $ipAddress = null
-    ) {
+    )
+    {
         /// @todo
         return new LoginResponse($this->buildResponseArray(
             [
@@ -56,21 +43,64 @@ class Login extends Base
 
     public function passwordlessLogin(
         $partyId = null
-    ) {
-        /// @todo
+    )
+    {
+        $profile = $this->getUserProfileByPartyId($partyId);
+        return $this->createResponse($profile);
+    }
+
+    /**
+     * @param null|array $userProfile
+     * @return LoginResponse
+     * @throws \Abacus\AdvanceBundle\Core\Exception\AdvanceResponseException
+     */
+    protected function createResponse($userProfile)
+    {
+        if (!$profile) {
+            return $this->failedLoginResponse();
+        }
+
         return new LoginResponse($this->buildResponseArray(
             [
                 'LoginDetails' => [
-                    'FrontendCookieName' => 'FrontEndCookie',
-                    'FrontendCookieValue' => 'test',
-                    'ConcurrencyCookieName' => 'ConcurrencyCookie',
-                    'ConcurrencyCookieValue' => 'test',
-                    'Activated' => 'true',
-                    'UserToken' => 'abcdefghij',
-                    'Username' => 'lum-all3-live-sub@test.com',
-                    'PartyID' => 'lum-all3-live-sub@test.com',
-                    'UserRegistrationID' => 123,
+                    'FrontendCookieName' => $this->config['settings']['FrontEndCookieName'],
+                    'FrontendCookieValue' => 'test', // @todo
+                    'ConcurrencyCookieName' => $this->config['settings']['ConcurrencyCookieName'],
+                    'ConcurrencyCookieValue' => 'test', // @todo
+                    'Activated' => 'True',
+                    'UserToken' => $this->generateTokenFromUserProfile($profile),
+                    'Username' => $profile['Username'],
+                    'PartyID' => $profile['partyId'],
+                    'UserRegistrationID' => $profile['UserRegistrationID'],
                 ],
+            ]
+        ));
+    }
+
+    protected function failedLoginResponse($errCode = 1, $message = 'Invalid username/password.')
+    {
+        return new LoginResponse($this->buildResponseArray(
+            [
+                'LoginDetails' => [
+                    'FrontendCookieName' => $this->config['settings']['FrontEndCookieName'],
+                    'FrontendCookieValue' => 'test', // @todo
+                    'ConcurrencyCookieName' => $this->config['settings']['ConcurrencyCookieName'],
+                    'ConcurrencyCookieValue' => 'test', // @todo
+                    'Activated' => 'False',
+                    'UserToken' => '',
+                    'Username' => '',
+                    'PartyID' => 0,
+                    'UserRegistrationID' => 0,
+                ],
+            ],
+            'ERROR',
+            [
+                [
+                    'type' => 'error',
+                    'code' => $errCode,
+                    'msg' => $message
+                ]
+
             ]
         ));
     }

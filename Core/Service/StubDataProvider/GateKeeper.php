@@ -19,9 +19,15 @@ class GateKeeper extends Base
         $BrandId = null,
         $SourceId = null,
         $ipAddress = null
-        ) {
+        )
+    {
+        $profile = $this->getUserProfileFromToken($userToken);
 
-        /// @todo
+        if (!$profile) {
+            return $this->failedResponse();
+        }
+
+        /// @todo implement check based on data from profile
         return new GateKeeperResponse($this->buildResponseArray([
             'GKResult' => [
                 'Status' => GateKeeperSvc::ACCESS_GRANTED,
