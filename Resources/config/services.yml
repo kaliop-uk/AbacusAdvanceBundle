@@ -4,16 +4,24 @@ parameters:
 
     abacus.advance.client.class: Abacus\AdvanceBundle\Core\AdvanceClient
 
+    abacus.advance.stub_data_provider.gatekeeper.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\GateKeeper
+    abacus.advance.stub_data_provider.login.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\Login
+    abacus.advance.stub_data_provider.user.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\User
+
+    abacus.advance.stub_data_provider.config:
+        -
+        -
+
 services:
 
     abacus.advance.client:
         class: '%abacus.advance.client.class%'
         arguments:
-          - '%advance_api_base_url%'
-          - '%advance_api_credentials_hash%'
-          - '%advance_api_credentials_token%'
-          - '%advance_api_version%'
-          - '%advance_api_http_options%'
+            - '%advance_api_base_url%'
+            - '%advance_api_credentials_hash%'
+            - '%advance_api_credentials_token%'
+            - '%advance_api_version%'
+            - '%advance_api_http_options%'
 
     abacus.advance.api:
         class: Abacus\AdvanceBundle\Core\AdvanceApiGateway
@@ -29,3 +37,19 @@ services:
         class: Abacus\AdvanceBundle\Core\Service\User
         arguments:
           - '@=service(parameter("advance_api_client"))'
+
+    abacus.advance.stub_data_provider.login:
+        class: '%abacus.advance.stub_data_provider.login.class%'
+        arguments:
+            - '%abacus.advance.stub_data_provider.data%'
+
+    abacus.advance.stub_data_provider.gatekeeper:
+        class: '%abacus.advance.stub_data_provider.gatekeeper.class%'
+        arguments:
+            - '%abacus.advance.stub_data_provider.data%'
+
+
+    abacus.advance.stub_data_provider.user:
+        class: '%abacus.advance.stub_data_provider.user.class%'
+        arguments:
+            - '%abacus.advance.stub_data_provider.config%'

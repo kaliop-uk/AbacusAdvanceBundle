@@ -1,3 +1,5 @@
+# API exposed for ADvance callbacks
+
 abacus_advance_api_categories:
     path: /{site}/ad/categories
     defaults: { _controller: 'AbacusAdvanceBundle:Api:categories' }

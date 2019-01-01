@@ -1,0 +1,71 @@
+# ADvance API, stubbed out for testing
+
+abacus_advance_stub_gatekeeper_accessallowed:
+    path: "/{site}/ad-stub/api/GateKeeper/AccessAllowed/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/GateKeeper:accessAllowed' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_login_login:
+    path: "/{site}/ad-stub/api/Login/Login/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/Login:login' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_login_autologin:
+    path: "/{site}/ad-stub/api/Login/Autologin/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/Login:autoLogin' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_login_passwordlesslogin:
+    path: "/{site}/ad-stub/api/Login/PasswordlessLogin/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/Login:passwordlessLogin' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_user_userdetails:
+    path: "/{site}/ad-stub/api/User/UserDetails/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/User:details' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_user_getusersubscriptions:
+    path: "/{site}/ad-stub/api/User/GetUserSubscriptions/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/User:getUserSubscriptions' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_user_getlistofavailableproducts:
+    path: "/{site}/ad-stub/api/User/GetListOfAvailableProducts/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/User:getListOfAvailableProducts' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_user_doespartybelongtobi:
+    path: "/{site}/ad-stub/api/User/DoesPartyBelongToBI/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/User:doesPartyBelongToBI' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_user_logwebactivity:
+    path: "/{site}/ad-stub/api/User/LogWebActivity/{version}"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/User:logWebActivity' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
+
+abacus_advance_stub_adfetokenauth:
+    path: "/{site}/ad-stub/site/adfetokenauth.ashx"
+    defaults: { _controller: 'AbacusAdvanceBundle:AdvanceStub/Site:adfeTokenAuth' }
+    #methods: [POST]
+    requirements:
+        version: '\d+'
