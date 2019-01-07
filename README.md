@@ -40,6 +40,10 @@ Each service can return one or many responses pre-formatted.
 
 To be documented...
 
+### Using the local API Stub to emulate ADvance 
+
+To be documented...
+
 
 ## Examples
 
@@ -76,3 +80,4 @@ To be documented...
 
 * [Rémi Souverain](mailto:rsouverain@kaliop.com?subject=[Abacus\\AdvanceBundle])
 * [Yann Roseau](mailto:yroseau@kaliop.com?subject=[Abacus\\AdvanceBundle])
+* Gaetano Giunta

@@ -1,3 +1,10 @@
+Version 1.3
+===========
+
+Added a basic stub of the Abacus ADvance API.
+The primary usecase is for testing the codebase, but it can be used as well for when you are developing your app offline
+or have not yet been given access to an ADvance account. 
+
 Version 1.2
 ===========
 

@@ -8,3 +8,7 @@ parameters:
 #    advance_api_credentials_token: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 #    advance_api_version: 1
 #    advance_api_http_options: options passed directly to Guzzle
+
+# These are optional:
+
+#    abacus.advance.stub_data_provider.config: {} (see the one in services.yml as example)

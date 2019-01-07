@@ -4,16 +4,76 @@ parameters:
 
     abacus.advance.client.class: Abacus\AdvanceBundle\Core\AdvanceClient
 
+    abacus.advance.stub_data_provider.gatekeeper.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\GateKeeper
+    abacus.advance.stub_data_provider.login.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\Login
+    abacus.advance.stub_data_provider.user.class: Abacus\AdvanceBundle\Core\Service\StubDataProvider\User
+
+    abacus.advance.stub_data_provider.config:
+        settings:
+            FrontendCookieName: FrontendCookie
+            ConcurrencyCookieName: ConcurrencyCookie
+        users:
+            -
+                LoginRegexp: '/^valid_user@test\.com$/'
+                PasswordRegexp: '/^test$/'
+                Username: valid_user@test.com
+                PartyId: 1234
+                UserRegistrationID: 12345
+                Forname: Valid
+                Surname: User
+                Salutation: Mr.
+                Gender: M
+                DateOfBirthday: 02/09/1972
+                AccessRules: # for gatekeeper calls
+                    -
+                Subscriptions:
+                    -
+                        SubscriptionID:
+                        StartDate:
+                        StartDateTime:
+                        EndDate:
+                        EndDateTime:
+                        ProductID:
+                        ProductCode: 123
+                        ProductName:
+                        ProductType:
+                        OrderCode:
+                        OrderDate:
+                        SubscriptionType:
+                        OrderStatus:
+                        SubscriptionStatus: Live
+                        OrderStatusDescription:
+                        SubscriptionPrice:
+                        DeliveryAddress:
+                        EmailAccount:
+                AvailableProducts:
+                    -
+                        OrderDate:
+                        ProductId:
+                        QualificationType:
+                        Value:
+                        IsMetered:
+                        MeteredOrder:
+                        AccessFrequency:
+                        FormCoreMatrixID:
+                        DataFilterStatus:
+                        DataFilterId:
+                        URLRule:
+                BIRulesBelongedTo:
+                    -
+                        FormIdRegexp: '/^.+$/'
+                        Status: 'True'
+
 services:
 
     abacus.advance.client:
         class: '%abacus.advance.client.class%'
         arguments:
-          - '%advance_api_base_url%'
-          - '%advance_api_credentials_hash%'
-          - '%advance_api_credentials_token%'
-          - '%advance_api_version%'
-          - '%advance_api_http_options%'
+            - '%advance_api_base_url%'
+            - '%advance_api_credentials_hash%'
+            - '%advance_api_credentials_token%'
+            - '%advance_api_version%'
+            - '%advance_api_http_options%'
 
     abacus.advance.api:
         class: Abacus\AdvanceBundle\Core\AdvanceApiGateway
@@ -29,3 +89,19 @@ services:
         class: Abacus\AdvanceBundle\Core\Service\User
         arguments:
           - '@=service(parameter("advance_api_client"))'
+
+    abacus.advance.stub_data_provider.login:
+        class: '%abacus.advance.stub_data_provider.login.class%'
+        arguments:
+            - '%abacus.advance.stub_data_provider.config%'
+
+    abacus.advance.stub_data_provider.gatekeeper:
+        class: '%abacus.advance.stub_data_provider.gatekeeper.class%'
+        arguments:
+            - '%abacus.advance.stub_data_provider.config%'
+
+
+    abacus.advance.stub_data_provider.user:
+        class: '%abacus.advance.stub_data_provider.user.class%'
+        arguments:
+            - '%abacus.advance.stub_data_provider.config%'
